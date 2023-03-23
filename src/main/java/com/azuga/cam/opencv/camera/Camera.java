@@ -20,7 +20,7 @@ import java.util.Date;
 public class Camera extends JFrame {
 
     // camera screen
-    private final JLabel cameraScreen;
+    private static JLabel cameraScreen = null;
     private final JButton btnCapture;
     private VideoCapture capture;
     private Mat image;
@@ -64,9 +64,9 @@ public class Camera extends JFrame {
         // Start speech recognition
         // Set up the configuration
         Configuration configuration = new Configuration();
-        configuration.setAcousticModelPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/en-us");
-        configuration.setDictionaryPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/speech.dict");
-        configuration.setLanguageModelPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/en-us.lm.bin");
+        configuration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
+        configuration.setDictionaryPath("src/main/resources/speech.dict");
+        configuration.setLanguageModelPath("src/main/resources/lang.lm");
 
         // Create the live recognizer
         LiveSpeechRecognizer recognizer = new LiveSpeechRecognizer(configuration);
@@ -81,10 +81,12 @@ public class Camera extends JFrame {
             System.out.println("Listening...");
             String utterance = recognizer.getResult().getHypothesis();
             System.out.println("You said: " + utterance);
-            if (utterance.equalsIgnoreCase("open")){
+            if (utterance.equalsIgnoreCase("open Camera")){
                 StartCameraStreaming();
             }
-
+            else if(utterance.equalsIgnoreCase("close camera")){
+                stopCamera();
+            }
             // Exit the loop if the user says "stop"
             if (utterance.equals("stop")) {
                 break;
@@ -103,12 +105,13 @@ public class Camera extends JFrame {
             Camera camera = new Camera();
 
             //start new thread in camera
-            new Thread(() -> {
-                camera.startCamera();
-            }).start();
+            new Thread(camera::startCamera).start();
         });
     }
 
+    private static void stopCamera(){
+        cameraScreen.setVisible(false);
+    }
     // create camera
     public void startCamera() {
 //        capture = new VideoCapture("rtsp://192.168.1.94:8080/h264_ulaw.sdp");
