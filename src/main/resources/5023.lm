@@ -1,0 +1,90 @@
+Language model created by QuickLM on Thu Mar 30 05:15:36 EDT 2023
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 12 sentences and 17 words
+
+\data\
+ngram 1=17
+ngram 2=29
+ngram 3=21
+
+\1-grams:
+-0.8751 </s> -0.3010
+-0.8751 <s> -0.2389
+-1.9542 ALERT -0.2389
+-1.9542 ALERTS -0.2389
+-1.6532 AZUGA -0.2913
+-1.9542 BREADCRUMB -0.2389
+-1.4771 CAMERA -0.2333
+-1.6532 CLOSE -0.2762
+-1.6532 FLEET -0.2333
+-1.6532 OPEN -0.2762
+-1.9542 PORTAL -0.2389
+-1.9542 REPORT -0.2389
+-1.9542 START -0.2863
+-1.9542 STOP -0.2389
+-1.9542 STREAMING -0.2389
+-1.9542 TRIP -0.2389
+-1.9542 TRIPS -0.2389
+
+\2-grams:
+-1.3802 <s> ALERT 0.0000
+-1.3802 <s> ALERTS 0.0000
+-1.3802 <s> BREADCRUMB 0.0000
+-1.0792 <s> CLOSE 0.0000
+-1.0792 <s> OPEN 0.0000
+-1.3802 <s> REPORT 0.0000
+-1.3802 <s> START 0.0000
+-1.3802 <s> STOP 0.0000
+-1.3802 <s> TRIP 0.0000
+-1.3802 <s> TRIPS 0.0000
+-0.3010 ALERT </s> -0.3010
+-0.3010 ALERTS </s> -0.3010
+-0.3010 AZUGA FLEET 0.0000
+-0.3010 BREADCRUMB </s> -0.3010
+-0.4771 CAMERA </s> -0.3010
+-0.7782 CAMERA STREAMING 0.0000
+-0.6021 CLOSE AZUGA 0.0000
+-0.6021 CLOSE CAMERA -0.1249
+-0.6021 FLEET </s> -0.3010
+-0.6021 FLEET PORTAL 0.0000
+-0.6021 OPEN AZUGA 0.0000
+-0.6021 OPEN CAMERA -0.1249
+-0.3010 PORTAL </s> -0.3010
+-0.3010 REPORT </s> -0.3010
+-0.3010 START CAMERA -0.2218
+-0.3010 STOP </s> -0.3010
+-0.3010 STREAMING </s> -0.3010
+-0.3010 TRIP </s> -0.3010
+-0.3010 TRIPS </s> -0.3010
+
+\3-grams:
+-0.3010 <s> ALERT </s>
+-0.3010 <s> ALERTS </s>
+-0.3010 <s> BREADCRUMB </s>
+-0.6021 <s> CLOSE AZUGA
+-0.6021 <s> CLOSE CAMERA
+-0.6021 <s> OPEN AZUGA
+-0.6021 <s> OPEN CAMERA
+-0.3010 <s> REPORT </s>
+-0.3010 <s> START CAMERA
+-0.3010 <s> STOP </s>
+-0.3010 <s> TRIP </s>
+-0.3010 <s> TRIPS </s>
+-0.6021 AZUGA FLEET </s>
+-0.6021 AZUGA FLEET PORTAL
+-0.3010 CAMERA STREAMING </s>
+-0.3010 CLOSE AZUGA FLEET
+-0.3010 CLOSE CAMERA </s>
+-0.3010 FLEET PORTAL </s>
+-0.3010 OPEN AZUGA FLEET
+-0.3010 OPEN CAMERA </s>
+-0.3010 START CAMERA STREAMING
+
+\end\

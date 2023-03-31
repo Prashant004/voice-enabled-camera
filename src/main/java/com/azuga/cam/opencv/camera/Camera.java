@@ -1,5 +1,6 @@
 package com.azuga.cam.opencv.camera;
 
+import com.azuga.cam.constants.AzugaConstants;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import nu.pattern.OpenCV;
@@ -39,7 +40,7 @@ public class Camera extends JFrame {
         add(btnCapture);
 
         btnCapture.addActionListener((ActionEvent e) -> {
-                clicked = true;
+            clicked = true;
         });
 
         // stop application when window closed
@@ -64,9 +65,12 @@ public class Camera extends JFrame {
         // Start speech recognition
         // Set up the configuration
         Configuration configuration = new Configuration();
-        configuration.setAcousticModelPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/en-us");
-        configuration.setDictionaryPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/speech.dict");
-        configuration.setLanguageModelPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/en-us.lm.bin");
+//        configuration.setAcousticModelPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/en-us");
+//        configuration.setDictionaryPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/speech.dict");
+//        configuration.setLanguageModelPath("/Users/azuga/Documents/POC/boot-cam/cam/src/main/resources/en-us.lm.bin");
+        configuration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
+        configuration.setDictionaryPath("/Users/azuga/Documents/tutorials/voice-enabled-camera/src/main/resources/5023.dic");
+        configuration.setLanguageModelPath("/Users/azuga/Documents/tutorials/voice-enabled-camera/src/main/resources/5023.lm");
 
         // Create the live recognizer
         LiveSpeechRecognizer recognizer = new LiveSpeechRecognizer(configuration);
@@ -76,23 +80,43 @@ public class Camera extends JFrame {
 
         // Loop until the user says "stop"
         System.out.println("Start speaking. Say 'stop' to exit.");
-        while (true) {
-            // Get the next utterance
-            System.out.println("Listening...");
-            String utterance = recognizer.getResult().getHypothesis();
-            System.out.println("You said: " + utterance);
-            if (utterance.equalsIgnoreCase("open")){
-                StartCameraStreaming();
-            }
 
+
+        while (true) {
+            // Get the next command
+            System.out.println("Listening...");
+            String speech = recognizer.getResult().getHypothesis();
+            System.out.println("You said: " + speech);
+
+            switch (speech) {
+                case "START CAMERA STREAMING":
+                    StartCameraStreaming();
+                    break;
+                case "OPEN AZUGA FLEET PORTAL":
+                    Runtime.getRuntime().exec(new String[]{AzugaConstants.terminal, AzugaConstants.option,
+                            AzugaConstants.browser, AzugaConstants.livemap});
+                    break;
+                case "OPEN TRIPS REPORT":
+                    Runtime.getRuntime().exec(new String[]{AzugaConstants.terminal, AzugaConstants.option,
+                            AzugaConstants.browser, AzugaConstants.trips});
+                    break;
+                case "OPEN ALERTS REPORT":
+                    Runtime.getRuntime().exec(new String[]{AzugaConstants.terminal, AzugaConstants.option,
+                            AzugaConstants.browser, AzugaConstants.alerts});
+                    break;
+                case "OPEN BREADCRUMB REPORT":
+                    Runtime.getRuntime().exec(new String[]{AzugaConstants.terminal, AzugaConstants.option,
+                            AzugaConstants.browser, AzugaConstants.breadcrumb});
+                    break;
+
+            }
             // Exit the loop if the user says "stop"
-            if (utterance.equals("stop")) {
+            if (speech.equalsIgnoreCase("stop")) {
                 break;
             }
         }
         // Stop recognition
         recognizer.stopRecognition();
-//        StartCameraStreaming();
     }
 
     private static void StartCameraStreaming() {
@@ -133,11 +157,11 @@ public class Camera extends JFrame {
             if (clicked) {
                 //prompt for image name
                 String name = JOptionPane.showInputDialog("Enter image name");
-                if(name ==null){
+                if (name == null) {
                     name = new SimpleDateFormat("dd-mm-yyyy-hh-mm-ss").format(new Date());
                 }
                 //write to file
-                Imgcodecs.imwrite("images/"+name+".jpg", image);
+                Imgcodecs.imwrite("images/" + name + ".jpg", image);
                 clicked = false;
             }
         }
